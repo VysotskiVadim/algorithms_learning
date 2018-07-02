@@ -10,6 +10,8 @@ namespace al {
             RingBuffer();
             RingBuffer(int size);
             ~RingBuffer();
+            int write(char *data, int lenght);
+            int read(char *buffer, int lenght);
     };
 
 }
