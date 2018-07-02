@@ -26,16 +26,8 @@ int main(
 {
     int result = 0;
 
-    RingBuffer rb;
-
-    // list.addTask("write code");
-    // list.addTask("compile");
-    // list.addTask("test");
-
-    // result |= EXPECT_EQUAL(list.size(),     3);
-    // result |= EXPECT_EQUAL(list.getTask(0), "write code");
-    // result |= EXPECT_EQUAL(list.getTask(1), "compile");
-    // result |= EXPECT_EQUAL(list.getTask(2), "test");
+    RingBuffer *rb = new RingBuffer(40);
+    delete rb;
 
     if (result == 0)
     {

@@ -3,8 +3,13 @@
 namespace al {
 
     class RingBuffer {
+        private:
+            int _size;
+            char *_buffer; 
         public:
-        RingBuffer();
+            RingBuffer();
+            RingBuffer(int size);
+            ~RingBuffer();
     };
 
 }
