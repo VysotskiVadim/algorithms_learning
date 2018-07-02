@@ -4,3 +4,7 @@ add_library(ring_buffer_lib
     RingBuffer.cpp
     RingBuffer.hpp
 )
+
+target_include_directories(ring_buffer_lib
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+)
