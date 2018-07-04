@@ -13,6 +13,8 @@ TEST(RingBufferHelper, getFreeSpace) {
     EXPECT_EQ(result, 3);
     result = getFreeSpaceOfCycleBuffer(4, 2, 6);
     EXPECT_EQ(result, 2);
+    result = getFreeSpaceOfCycleBuffer(0, 0, 8);
+    EXPECT_EQ(result, 8);
 }
 
 TEST(RingBuffer, createThenDestruct) {
@@ -31,6 +33,16 @@ TEST(RingBuffer, writeAndReadInEmptyBuffer) {
     int readed = rb.read(readedData, length);
     EXPECT_EQ(length, readed);
     ASSERT_STREQ(data, readedData);
+}
+
+TEST(RingBuffer, overflowEmptyBuffer) {
+    char *data = "the data";
+    int length = strlen(data);
+    int bufferSize = length - 1;
+    RingBuffer rb(bufferSize);
+
+    int written = rb.write(data, length);
+    ASSERT_EQ(written, bufferSize);
 }
 
 int main(int argc, char** argv) {

@@ -5,7 +5,10 @@ namespace al {
     class RingBuffer {
         private:
             int _size;
-            char *_buffer; 
+            char *_buffer;
+            int _head;
+            int _tail;
+            int getFreeSpace();
         public:
             RingBuffer();
             RingBuffer(int size);
