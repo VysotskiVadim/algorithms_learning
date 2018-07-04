@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Ring buffer test",
+            "name": "rb test",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/ring_buffer/test/ring_buffer_test",
