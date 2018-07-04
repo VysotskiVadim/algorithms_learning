@@ -18,7 +18,12 @@ al::RingBuffer::~RingBuffer() {
 }
 
 int al::RingBuffer::read(char *buffer, int lenght) {
-    memcpy(buffer, _buffer, lenght);
+    int usedSpace = getUsedSpace();
+    if (usedSpace < lenght) {
+        lenght = usedSpace;
+    }
+    memcpy(buffer, &_buffer[_head], lenght);
+    _head += lenght;
     return lenght;
 }
 
@@ -34,4 +39,8 @@ int al::RingBuffer::write(char *data, int length) {
 
 int al::RingBuffer::getFreeSpace() {
     return getFreeSpaceOfCycleBuffer(_head, _tail, _size);
+}
+
+int al::RingBuffer::getUsedSpace() {
+    return getUsedSpaceOfCycleBuffer(_head, _tail, _size);
 }

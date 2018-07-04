@@ -17,12 +17,24 @@ TEST(RingBufferHelper, getFreeSpace) {
     EXPECT_EQ(result, 8);
 }
 
+TEST(RingBufferHelper, getUsedSpace) {
+    int result = -1;
+    result = getUsedSpaceOfCycleBuffer(0, 2, 4);
+    EXPECT_EQ(result, 2);
+    result = getUsedSpaceOfCycleBuffer(1, 2, 4);
+    EXPECT_EQ(result, 1);
+    result = getUsedSpaceOfCycleBuffer(4, 2, 10);
+    EXPECT_EQ(result, 8);
+    result = getUsedSpaceOfCycleBuffer(0, 0, 8);
+    EXPECT_EQ(result, 0);
+}
+
 TEST(RingBuffer, createThenDestruct) {
     RingBuffer *rb = new RingBuffer(40);
     delete rb;
 }
 
-TEST(RingBuffer, writeAndReadInEmptyBuffer) {
+TEST(RingBuffer, writeThenReadInEmptyBuffer) {
     char *data = "the data";
     int length = strlen(data);
     RingBuffer rb(length);
@@ -33,6 +45,26 @@ TEST(RingBuffer, writeAndReadInEmptyBuffer) {
     int readed = rb.read(readedData, length);
     EXPECT_EQ(length, readed);
     ASSERT_STREQ(data, readedData);
+}
+
+TEST(RingBuffer, partialRead) {
+    char *data = "123456789";
+    int length = strlen(data);
+    RingBuffer rb(length);
+    rb.write(data, length);
+
+    char *readedData = new char[5];
+    int readed = rb.read(readedData, 2);
+    EXPECT_EQ(2, readed);
+    ASSERT_STREQ(readedData, "12");
+
+    readed = rb.read(readedData, 3);
+    EXPECT_EQ(3, readed);
+    ASSERT_STREQ(readedData, "345");
+
+    readed = rb.read(readedData, 10);
+    EXPECT_EQ(4, readed);
+    ASSERT_STREQ(readedData, "6789");
 }
 
 TEST(RingBuffer, overflowEmptyBuffer) {

@@ -9,6 +9,7 @@ namespace al {
             int _head;
             int _tail;
             int getFreeSpace();
+            int getUsedSpace();
         public:
             RingBuffer();
             RingBuffer(int size);

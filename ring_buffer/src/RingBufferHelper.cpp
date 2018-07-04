@@ -9,3 +9,12 @@ int al::getFreeSpaceOfCycleBuffer(int headOffset, int tailOffset, int lenght) {
     }
     
 }
+
+int al::getUsedSpaceOfCycleBuffer(int headOffset, int tailOffset, int lenght) {
+    if (tailOffset < headOffset) {
+        return lenght - (headOffset - tailOffset);
+    }
+    else {
+        return tailOffset - headOffset;
+    }
+}
