@@ -2,7 +2,7 @@
 
 namespace al {
 
-    int getFreeSpaceOfCycleBuffer(int headOffset, int tailOffset, int lenght);
-    int getUsedSpaceOfCycleBuffer(int headOffset, int tailOffset, int lenght);
+    int getFreeSpaceOfCycleBuffer(int tailOffset, int headOffset, int size);
+    int getUsedSpaceOfCycleBuffer(int tailOffset, int headOffset, int size);
 
 }

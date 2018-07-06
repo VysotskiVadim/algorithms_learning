@@ -8,8 +8,8 @@ al::RingBuffer::RingBuffer() {
 
 al::RingBuffer::RingBuffer(int size) {
     _size = size;
-    _head = 0;
     _tail = 0;
+    _head = 0;
     _buffer = new char[size];
 }
 
@@ -23,16 +23,16 @@ int al::RingBuffer::read(char *buffer, int lenght) {
         lenght = usedSpace;
     }
 
-    int spaceBeforeEndOfBuffer = _size - _head;
+    int spaceBeforeEndOfBuffer = _size - _tail;
     if (spaceBeforeEndOfBuffer >= lenght) {
-        memcpy(buffer, &_buffer[_head], lenght);
-        _head += lenght;
+        memcpy(buffer, &_buffer[_tail], lenght);
+        _tail += lenght;
     }
     else {
-        memcpy(buffer, &_buffer[_head], spaceBeforeEndOfBuffer);
+        memcpy(buffer, &_buffer[_tail], spaceBeforeEndOfBuffer);
         int leftToRead = lenght - spaceBeforeEndOfBuffer;
         memcpy(&buffer[spaceBeforeEndOfBuffer], _buffer, leftToRead);
-        _head = leftToRead;
+        _tail = leftToRead;
     }
     
     return lenght;
@@ -44,25 +44,25 @@ int al::RingBuffer::write(char *data, int length) {
         length = freeSpace;
     }
 
-    int spaceBeforeEndOfBuffer = _size - _tail;
+    int spaceBeforeEndOfBuffer = _size - _head;
     if (spaceBeforeEndOfBuffer >= length) {
-        memcpy(&_buffer[_tail], data, length);
-        _tail += length;
+        memcpy(&_buffer[_head], data, length);
+        _head += length;
     }
     else {
-        memcpy(&_buffer[_tail], data, spaceBeforeEndOfBuffer);
+        memcpy(&_buffer[_head], data, spaceBeforeEndOfBuffer);
         int leftToWtire = length - spaceBeforeEndOfBuffer;
         memcpy(_buffer, &data[spaceBeforeEndOfBuffer], leftToWtire);
-        _tail = leftToWtire;
+        _head = leftToWtire;
     }
     
     return length;
 }
 
 int al::RingBuffer::getFreeSpace() {
-    return getFreeSpaceOfCycleBuffer(_head, _tail, _size);
+    return getFreeSpaceOfCycleBuffer(_tail, _head, _size);
 }
 
 int al::RingBuffer::getUsedSpace() {
-    return getUsedSpaceOfCycleBuffer(_head, _tail, _size);
+    return getUsedSpaceOfCycleBuffer(_tail, _head, _size);
 }

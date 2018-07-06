@@ -1,20 +1,20 @@
 #include "RingBufferHelper.hpp"
 
-int al::getFreeSpaceOfCycleBuffer(int headOffset, int tailOffset, int lenght) {
-    if (tailOffset >= headOffset) {
-        return lenght - tailOffset + headOffset;
+int al::getFreeSpaceOfCycleBuffer(int tailOffset, int headOffset, int size) {
+    if (headOffset >= tailOffset) {
+        return size - headOffset + tailOffset;
     }
     else {
-        return headOffset - tailOffset;
+        return tailOffset - headOffset;
     }
     
 }
 
-int al::getUsedSpaceOfCycleBuffer(int headOffset, int tailOffset, int lenght) {
-    if (tailOffset < headOffset) {
-        return lenght - (headOffset - tailOffset);
+int al::getUsedSpaceOfCycleBuffer(int tailOffset, int headOffset, int size) {
+    if (headOffset < tailOffset) {
+        return size - (tailOffset - headOffset);
     }
     else {
-        return tailOffset - headOffset;
+        return headOffset - tailOffset;
     }
 }
