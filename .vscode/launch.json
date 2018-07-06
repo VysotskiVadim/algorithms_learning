@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "rb test",
+            "name": "rb test ms",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/ring_buffer/test/ring_buffer_test",
@@ -16,6 +16,13 @@
             "externalConsole": true,
             "MIMode": "lldb",
             "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+        },
+        {
+            "name": "rb test n",
+            "type": "lldb-mi",
+            "request": "launch",
+            "target": "${workspaceFolder}/build/ring_buffer/test/ring_buffer_test",
+            "lldbmipath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
         }
     ]
 }
