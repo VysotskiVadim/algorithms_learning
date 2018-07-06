@@ -22,8 +22,19 @@ int al::RingBuffer::read(char *buffer, int lenght) {
     if (usedSpace < lenght) {
         lenght = usedSpace;
     }
-    memcpy(buffer, &_buffer[_head], lenght);
-    _head += lenght;
+
+    int spaceBeforeEndOfBuffer = _size - _head;
+    if (spaceBeforeEndOfBuffer >= lenght) {
+        memcpy(buffer, &_buffer[_head], lenght);
+        _head += lenght;
+    }
+    else {
+        memcpy(buffer, &_buffer[_head], spaceBeforeEndOfBuffer);
+        int leftToRead = lenght - spaceBeforeEndOfBuffer;
+        memcpy(&buffer[spaceBeforeEndOfBuffer], _buffer, leftToRead);
+        _head = leftToRead;
+    }
+    
     return lenght;
 }
 
@@ -32,8 +43,19 @@ int al::RingBuffer::write(char *data, int length) {
     if (freeSpace < length) {
         length = freeSpace;
     }
-    memcpy(&_buffer[_tail], data, length);
-    _tail += length;
+
+    int spaceBeforeEndOfBuffer = _size - _tail;
+    if (spaceBeforeEndOfBuffer >= length) {
+        memcpy(&_buffer[_tail], data, length);
+        _tail += length;
+    }
+    else {
+        memcpy(&_buffer[_tail], data, spaceBeforeEndOfBuffer);
+        int leftToWtire = length - spaceBeforeEndOfBuffer;
+        memcpy(_buffer, &data[spaceBeforeEndOfBuffer], leftToWtire);
+        _tail = leftToWtire;
+    }
+    
     return length;
 }
 

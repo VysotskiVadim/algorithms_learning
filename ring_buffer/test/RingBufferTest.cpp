@@ -77,6 +77,19 @@ TEST(RingBuffer, overflowEmptyBuffer) {
     ASSERT_EQ(written, bufferSize);
 }
 
+TEST(RingBuffer, cycleWriteRead) {
+    char *data = "12345";
+    RingBuffer rb(6);
+    rb.write(data, 5);
+
+    char buffer[6] = {};
+    rb.read(buffer, 3);
+    rb.write("678", 3);
+    rb.read(buffer, 5);
+    
+    ASSERT_STREQ(buffer, "45678");
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
