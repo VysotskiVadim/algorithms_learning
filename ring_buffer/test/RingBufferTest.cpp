@@ -7,26 +7,30 @@ using namespace al;
 
 TEST(RingBufferHelper, getFreeSpace) {
     int result = -1;
-    result = getFreeSpaceOfCycleBuffer(0, 2, 4);
+    result = getFreeSpaceOfCycleBuffer(0, 2, 4, false);
     EXPECT_EQ(result, 2);
-    result = getFreeSpaceOfCycleBuffer(1, 2, 4);
+    result = getFreeSpaceOfCycleBuffer(1, 2, 4, false);
     EXPECT_EQ(result, 3);
-    result = getFreeSpaceOfCycleBuffer(4, 2, 6);
+    result = getFreeSpaceOfCycleBuffer(4, 2, 6, false);
     EXPECT_EQ(result, 2);
-    result = getFreeSpaceOfCycleBuffer(0, 0, 8);
+    result = getFreeSpaceOfCycleBuffer(0, 0, 8, false);
+    EXPECT_EQ(result, 0);
+    result = getFreeSpaceOfCycleBuffer(0, 0, 8, true);
     EXPECT_EQ(result, 8);
 }
 
 TEST(RingBufferHelper, getUsedSpace) {
     int result = -1;
-    result = getUsedSpaceOfCycleBuffer(0, 2, 4);
+    result = getUsedSpaceOfCycleBuffer(0, 2, 4, false);
     EXPECT_EQ(result, 2);
-    result = getUsedSpaceOfCycleBuffer(1, 2, 4);
+    result = getUsedSpaceOfCycleBuffer(1, 2, 4, false);
     EXPECT_EQ(result, 1);
-    result = getUsedSpaceOfCycleBuffer(4, 2, 10);
+    result = getUsedSpaceOfCycleBuffer(4, 2, 10, false);
     EXPECT_EQ(result, 8);
-    result = getUsedSpaceOfCycleBuffer(0, 0, 8);
+    result = getUsedSpaceOfCycleBuffer(0, 0, 8, true);
     EXPECT_EQ(result, 0);
+    result = getUsedSpaceOfCycleBuffer(0, 0, 8, false);
+    EXPECT_EQ(result, 8);
 }
 
 TEST(RingBuffer, createThenDestruct) {

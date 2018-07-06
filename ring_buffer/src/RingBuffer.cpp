@@ -10,7 +10,8 @@ al::RingBuffer::RingBuffer(int size) {
     _size = size;
     _tail = 0;
     _head = 0;
-    _buffer = new char[size];
+    _isEmpty = true;
+    _buffer = new char[_size];
 }
 
 al::RingBuffer::~RingBuffer() {
@@ -19,8 +20,9 @@ al::RingBuffer::~RingBuffer() {
 
 int al::RingBuffer::read(char *buffer, int lenght) {
     int usedSpace = getUsedSpace();
-    if (usedSpace < lenght) {
+    if (usedSpace <= lenght) {
         lenght = usedSpace;
+        _isEmpty = true;
     }
 
     int spaceBeforeEndOfBuffer = _size - _tail;
@@ -34,7 +36,7 @@ int al::RingBuffer::read(char *buffer, int lenght) {
         memcpy(&buffer[spaceBeforeEndOfBuffer], _buffer, leftToRead);
         _tail = leftToRead;
     }
-    
+
     return lenght;
 }
 
@@ -51,18 +53,22 @@ int al::RingBuffer::write(char *data, int length) {
     }
     else {
         memcpy(&_buffer[_head], data, spaceBeforeEndOfBuffer);
-        int leftToWtire = length - spaceBeforeEndOfBuffer;
-        memcpy(_buffer, &data[spaceBeforeEndOfBuffer], leftToWtire);
-        _head = leftToWtire;
+        int leftToWrire = length - spaceBeforeEndOfBuffer;
+        memcpy(_buffer, &data[spaceBeforeEndOfBuffer], leftToWrire);
+        _head = leftToWrire;
+    }
+
+    if (length > 0) {
+        _isEmpty = false;
     }
     
     return length;
 }
 
 int al::RingBuffer::getFreeSpace() {
-    return getFreeSpaceOfCycleBuffer(_tail, _head, _size);
+    return getFreeSpaceOfCycleBuffer(_tail, _head, _size, _isEmpty);
 }
 
 int al::RingBuffer::getUsedSpace() {
-    return getUsedSpaceOfCycleBuffer(_tail, _head, _size);
+    return getUsedSpaceOfCycleBuffer(_tail, _head, _size, _isEmpty);
 }

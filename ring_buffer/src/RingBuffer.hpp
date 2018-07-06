@@ -8,6 +8,7 @@ namespace al {
             char *_buffer;
             int _head;
             int _tail;
+            bool _isEmpty;
             int getFreeSpace();
             int getUsedSpace();
         public:
