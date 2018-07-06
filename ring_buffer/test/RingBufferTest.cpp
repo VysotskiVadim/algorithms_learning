@@ -35,13 +35,13 @@ TEST(RingBuffer, createThenDestruct) {
 }
 
 TEST(RingBuffer, writeThenReadInEmptyBuffer) {
-    char *data = "the data";
-    int length = strlen(data);
-    RingBuffer rb(length);
+    char *data = "12345678";
+    const int length = 8;
+    RingBuffer rb(8);
 
-    int written = rb.write(data, length);
-    EXPECT_EQ(length, written);
-    char *readedData = new char[length];
+    int written = rb.write(data, 8);
+    EXPECT_EQ(8, written);
+    char readedData[length + 1] = {};
     int readed = rb.read(readedData, length);
     EXPECT_EQ(length, readed);
     ASSERT_STREQ(data, readedData);
@@ -53,7 +53,7 @@ TEST(RingBuffer, partialRead) {
     RingBuffer rb(length);
     rb.write(data, length);
 
-    char *readedData = new char[5];
+    char readedData[11] = {};
     int readed = rb.read(readedData, 2);
     EXPECT_EQ(2, readed);
     ASSERT_STREQ(readedData, "12");
