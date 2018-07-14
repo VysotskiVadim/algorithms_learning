@@ -7,4 +7,4 @@ target_link_libraries (ring_buffer_test
     ring_buffer_lib
 )
 
-gtest_discover_tests(ring_buffer_test)
+gtest_add_tests(ring_buffer_test "" AUTO)
