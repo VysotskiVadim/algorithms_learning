@@ -1,19 +1,20 @@
 #include "gtest/gtest.h"
 
+#include "Comparer.hpp"
+#include "GenericComparer.hpp"
+#include "BinaryHeapBasedPriorityQueue.hpp"
+
 using namespace al;
 
-TEST(RingBuffer, writeUntillFullThenReadAllThenWriteAgain) {
-    char *data = "12345";
-    RingBuffer rb(4);
-    char buffer[6] = {};
+TEST(Comparer, intGenericComparerTest) {
+    auto comparer = std::unique_ptr< Comparer<int> >(new GenericComparer<int>());
+    int result = comparer->compare(1, 2);
+    ASSERT_EQ(result, -1);
+}
 
-    rb.write(data, 5);
-    rb.read(buffer, 5);
-
-    rb.write("6789", 4);
-    rb.read(buffer, 4);
-    
-    ASSERT_STREQ(buffer, "6789");
+TEST(PriorityQueue, createQueue) {
+    auto queue = std::unique_ptr< PriorityQueue<int> >(new BinaryHeapBasedPriorityQueue<int>());
+    queue->addItem(12);
 }
 
 int main(int argc, char** argv) {
