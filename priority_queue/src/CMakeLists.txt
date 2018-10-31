@@ -1,6 +1,8 @@
 project('priority_queue_src')
 
 add_library(priority_queue_lib
+    Helper.h
+    Helper.cpp
     Comparer.hpp
     PriorityQueue.hpp
     BinaryHeapBasedPriorityQueue.hpp

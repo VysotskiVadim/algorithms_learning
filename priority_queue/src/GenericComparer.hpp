@@ -7,6 +7,7 @@ namespace al {
     public:
         GenericComparer() { }
         int compare(T a, T b) override;
+        ~GenericComparer() override { };
     };
 
     template <typename T>

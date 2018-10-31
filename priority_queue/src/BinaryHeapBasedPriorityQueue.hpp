@@ -11,6 +11,8 @@ namespace al {
         BinaryHeapBasedPriorityQueue() : PriorityQueue<T>() { }
         void addItem(T item) override;
         T removeNext() override;
+        int getCount() override;
+        ~BinaryHeapBasedPriorityQueue() override { }
     };
 
     template <typename T>
@@ -21,5 +23,10 @@ namespace al {
     template <typename T>
     T BinaryHeapBasedPriorityQueue<T>::removeNext() {
         return NULL;
+    }
+
+    template <typename T>
+    int BinaryHeapBasedPriorityQueue<T>::getCount() {
+        return 0;
     }
 }

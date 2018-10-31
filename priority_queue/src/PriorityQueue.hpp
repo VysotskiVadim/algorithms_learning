@@ -9,6 +9,7 @@ namespace al {
     public:
         virtual void addItem(T item) = 0;
         virtual T removeNext() = 0;
+        virtual int getCount() = 0;
 
         PriorityQueue(std::unique_ptr< Comparer<T> > comparer)
         : _comparer(std::move(comparer))
@@ -16,6 +17,8 @@ namespace al {
 
         PriorityQueue() : _comparer(std::unique_ptr< GenericComparer<T> >(new GenericComparer<T>))
         { }
+
+        virtual ~PriorityQueue() { }
     protected:
         std::unique_ptr< Comparer<T> > _comparer;
     };
