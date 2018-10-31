@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.9.0)
 
 project("algorithms_learing")
 
+set (CMAKE_CXX_STANDARD 11)
+
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
