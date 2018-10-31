@@ -13,16 +13,18 @@ namespace al {
         T removeNext() override;
         int getCount() override;
         ~BinaryHeapBasedPriorityQueue() override { }
+    private:
+        T _item;
     };
 
     template <typename T>
     void BinaryHeapBasedPriorityQueue<T>::addItem(T item) {
-
+        _item = item;
     }
 
     template <typename T>
     T BinaryHeapBasedPriorityQueue<T>::removeNext() {
-        return NULL;
+        return _item;
     }
 
     template <typename T>
