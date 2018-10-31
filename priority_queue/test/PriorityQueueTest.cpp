@@ -12,11 +12,9 @@ TEST(Comparer, intGenericComparerTest) {
     ASSERT_EQ(result, -1);
 }
 
-TEST(PriorityQueue, createQueue) {
-    //auto queue = std::unique_ptr< PriorityQueue<int> >(new BinaryHeapBasedPriorityQueue<int>());
-    PriorityQueue<int> *queue = new BinaryHeapBasedPriorityQueue<int>();
+TEST(PriorityQueue, queueInitialState) {
+    auto queue = std::unique_ptr< PriorityQueue<float> >(new BinaryHeapBasedPriorityQueue<float>());
     ASSERT_EQ(queue->getCount(), 0);
-    delete queue;
 }
 
 int main(int argc, char** argv) {
