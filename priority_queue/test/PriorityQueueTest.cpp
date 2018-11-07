@@ -18,7 +18,7 @@ TEST(BinaryHeap, defaultState) {
     ASSERT_EQ(10, heap.getCapacity());
 }
 
-TEST(BinaryHeap, inserting_in_right_order) {
+TEST(BinaryHeap, inserting_heap_ordered_sequence) {
     auto heap = BinaryHeap<int>();
     heap.insertItem(4);
     heap.insertItem(3);
@@ -27,6 +27,8 @@ TEST(BinaryHeap, inserting_in_right_order) {
     int array[] = { 4, 3, 2, 1 };
     int *expectedState = array;
     ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+    ASSERT_EQ(10, heap.getCapacity());
+    ASSERT_EQ(4, heap.getSize());
 }
 
 TEST(BinaryHeap, swim_from_bottom) {
