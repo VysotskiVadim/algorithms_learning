@@ -2,6 +2,7 @@
 
 #include "GenericComparer.hpp"
 #include "BinaryHeap.hpp"
+#include <cstring>
 
 using namespace al;
 
@@ -13,7 +14,28 @@ TEST(Comparer, intGenericComparerTest) {
 
 TEST(BinaryHeap, defaultState) {
     auto heap = BinaryHeap<int>();
-    ASSERT_EQ(10, heap.getSize());
+    ASSERT_EQ(0, heap.getSize());
+    ASSERT_EQ(10, heap.getCapacity());
+}
+
+TEST(BinaryHeap, inserting_in_right_order) {
+    auto heap = BinaryHeap<int>();
+    heap.insertItem(4);
+    heap.insertItem(3);
+    heap.insertItem(2);
+    heap.insertItem(1);
+    int array[] = { 4, 3, 2, 1 };
+    int *expectedState = array;
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+}
+
+TEST(BinaryHeap, test_swim_from_bottom) {
+    int initialState[] = { 4, 3, 2, 0 };
+    auto heap = BinaryHeap<int>(initialState, 3, 4);
+    heap.insertItem(5);
+    int array[] = { 5, 4, 2, 3 };
+    int *expectedState = array;
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
 }
 
 int main(int argc, char** argv) {
