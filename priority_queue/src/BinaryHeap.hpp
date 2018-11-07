@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "GenericComparer.hpp"
-#include <stdexcept>
+#include <cstring>
 
 namespace al {
 
@@ -42,6 +42,7 @@ namespace al {
         bool isTopNode(int index);
         int getParentIndex(int index);
         bool isMore(int index1, int index2);
+        void increaseHeapSize();
     };
 
 
@@ -101,6 +102,15 @@ namespace al {
         return _comparer->compare(getItem(index1), getItem(index2)) > 0;
     }
 
+    template <typename T>
+    void BinaryHeap<T>::increaseHeapSize() {
+        int newCapacity = getCapacity() * 2;
+        int* newHeap = new T[newCapacity];
+        std::memcpy(newHeap, _heap, sizeof(T) * getCapacity());
+        delete [] _heap;
+        _heap = newHeap;
+        _capacity = newCapacity;
+    }
 
     template <typename T>
     void BinaryHeap<T>::swim(int index) {
@@ -114,6 +124,9 @@ namespace al {
     template <typename T>
     void BinaryHeap<T>::insertItem(T item) {
         int nextElementPosition = getSize() + 1;
+        if (nextElementPosition > getCapacity()) {
+            increaseHeapSize();
+        }
         setItem(nextElementPosition, item);
         _size++;
         swim(nextElementPosition);

@@ -40,6 +40,17 @@ TEST(BinaryHeap, swim_from_bottom) {
     ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
 }
 
+TEST(BinaryHeap, heap_owerflow) {
+    int* initialState = new int[3] { 4, 3, 2 };
+    auto heap = BinaryHeap<int>(initialState, 3, 3);
+    heap.insertItem(5);
+    int array[] = { 5, 4, 2, 3 };
+    int *expectedState = array;
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+    ASSERT_EQ(4, heap.getSize());
+    ASSERT_EQ(6, heap.getCapacity());
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
