@@ -23,6 +23,18 @@
             "request": "launch",
             "target": "${workspaceFolder}/build/ring_buffer/test/ring_buffer_test",
             "lldbmipath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
-        }
+        },
+        {
+            "name": "priority queue test ms",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/priority_queue/test/priority_queue_test",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb"
+        },
     ]
 }
