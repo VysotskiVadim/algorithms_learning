@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
 
-#include "Comparer.hpp"
 #include "GenericComparer.hpp"
-#include "BinaryHeapBasedPriorityQueue.hpp"
+#include "BinaryHeap.hpp"
 
 using namespace al;
 
@@ -12,9 +11,9 @@ TEST(Comparer, intGenericComparerTest) {
     ASSERT_EQ(result, -1);
 }
 
-TEST(PriorityQueue, queueInitialState) {
-    auto queue = std::unique_ptr< PriorityQueue<float> >(new BinaryHeapBasedPriorityQueue<float>());
-    ASSERT_EQ(queue->getCount(), 0);
+TEST(BinaryHeap, defaultState) {
+    auto heap = BinaryHeap<int>();
+    ASSERT_EQ(10, heap.getSize());
 }
 
 int main(int argc, char** argv) {

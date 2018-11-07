@@ -7,8 +7,7 @@
 namespace al {
     template <typename T> class BinaryHeapBasedPriorityQueue: public PriorityQueue<T> {
     public:
-        BinaryHeapBasedPriorityQueue(std::unique_ptr< Comparer<T> > comparer) : PriorityQueue<T>(std::move(comparer)) { }
-        BinaryHeapBasedPriorityQueue() : PriorityQueue<T>() { }
+        BinaryHeapBasedPriorityQueue(std::unique_ptr< Comparer<T> > comparer) { }
         void addItem(T item) override;
         T removeNext() override;
         int getCount() override;
