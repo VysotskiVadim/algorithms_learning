@@ -91,6 +91,20 @@ TEST(BinaryHeap, set_item_by_index_out_of_range) {
     }, std::out_of_range);
 }
 
+TEST(BinaryHeap, heap_remove_from_top) {
+    int* initialState = new int[7] { 10, 8, 9, 7, 6, 5, 4 };
+    auto heap = BinaryHeap<int>(initialState, 7, 7);
+
+    int removedItem = heap.removeItemFromTop();
+
+    ASSERT_EQ(10, removedItem);
+    int* expectedState = new int[7] { 9, 8, 5, 7, 6, 4 };
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+    delete [] expectedState;
+    ASSERT_EQ(6, heap.getSize());
+    ASSERT_EQ(7, heap.getCapacity());
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

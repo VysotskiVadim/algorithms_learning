@@ -29,6 +29,8 @@ namespace al {
         int getSize();
         int getCapacity();
         void insertItem(T item);
+        T removeItemFromTop();
+
         T* getInnerHeap();
         T getItem(int index);
         void setItem(int index, T item);
@@ -43,7 +45,10 @@ namespace al {
         bool isTopNode(int index);
         int getParentIndex(int index);
         bool isMore(int index1, int index2);
+        bool isLess(int index1, int index2);
         void increaseHeapSize();
+        void sink(int index);
+        bool hasChild(int index);
     };
 
 
@@ -103,6 +108,11 @@ namespace al {
     }
 
     template <typename T>
+    bool BinaryHeap<T>::hasChild(int index) {
+        return index * 2 <= _size;
+    }
+
+    template <typename T>
     int BinaryHeap<T>::getParentIndex(int index) {
         int parent = index / 2;
         return parent;
@@ -111,6 +121,11 @@ namespace al {
     template <typename T>
     bool BinaryHeap<T>::isMore(int index1, int index2) {
         return _comparer->compare(getItem(index1), getItem(index2)) > 0;
+    }
+
+    template <typename T>
+    bool BinaryHeap<T>::isLess(int index1, int index2) {
+        return _comparer->compare(getItem(index1), getItem(index2)) < 0;
     }
 
     template <typename T>
@@ -133,6 +148,25 @@ namespace al {
     }
 
     template <typename T>
+    void BinaryHeap<T>::sink(int index) {
+        while (hasChild(index)) {
+            int childIndex = index * 2; 
+            int secondChildIndex = childIndex + 1;
+            bool hasSecondChild = secondChildIndex <= _size;
+            if (hasSecondChild && isLess(childIndex, secondChildIndex)) {
+                childIndex = secondChildIndex;
+            }
+            if (isLess(index, childIndex)) {
+                exchangeItems(index, childIndex);
+                index = childIndex;
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    template <typename T>
     void BinaryHeap<T>::insertItem(T item) {
         int nextElementPosition = getSize() + 1;
         if (nextElementPosition > getCapacity()) {
@@ -143,4 +177,13 @@ namespace al {
         swim(nextElementPosition);
     }
 
+
+    template <typename T>
+    T BinaryHeap<T>::removeItemFromTop() {
+        T topItem = getItem(1);
+        setItem(1, getItem(_size));
+        _size--;
+        sink(1);
+        return topItem;
+    }
 }
