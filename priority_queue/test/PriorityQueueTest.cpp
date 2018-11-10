@@ -115,11 +115,11 @@ TEST(PriorityQueue, queue) {
         queue.addItem(sequence[i]);
     }
 
-    int previousNumber = INT_MAX;
-    for (int i = 0; i < sequenceSize; i++) {
+    int previousIteam = queue.removeNext();;
+    for (int i = 1; i < sequenceSize; i++) {
         int removedItem = queue.removeNext();
-        ASSERT_LE(removedItem, previousNumber);
-        previousNumber = removedItem;
+        ASSERT_LE(removedItem, previousIteam);
+        previousIteam = removedItem;
     }
 }
 
