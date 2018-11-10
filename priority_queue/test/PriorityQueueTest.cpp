@@ -26,9 +26,8 @@ TEST(BinaryHeap, inserting_heap_ordered_sequence) {
     heap.insertItem(3);
     heap.insertItem(2);
     heap.insertItem(1);
-    int array[] = { 4, 3, 2, 1 };
-    int *expectedState = array;
-    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+    int expectedState[] = { 4, 3, 2, 1 };
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), &expectedState, sizeof(int) * 4));
     ASSERT_EQ(10, heap.getCapacity());
     ASSERT_EQ(4, heap.getSize());
 }
@@ -37,18 +36,16 @@ TEST(BinaryHeap, swim_from_bottom) {
     int* initialState = new int[4] { 4, 3, 2, 0 };
     BinaryHeap<int> heap(initialState, 3, 4);
     heap.insertItem(5);
-    int array[] = { 5, 4, 2, 3 };
-    int *expectedState = array;
-    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+    int expectedState[] = { 5, 4, 2, 3 };
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), &expectedState, sizeof(int) * 4));
 }
 
 TEST(BinaryHeap, heap_owerflow) {
     int* initialState = new int[3] { 4, 3, 2 };
     BinaryHeap<int> heap(initialState, 3, 3);
     heap.insertItem(5);
-    int array[] = { 5, 4, 2, 3 };
-    int *expectedState = array;
-    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
+    int expectedState[] = { 5, 4, 2, 3 };
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), &expectedState, sizeof(int) * 4));
     ASSERT_EQ(4, heap.getSize());
     ASSERT_EQ(6, heap.getCapacity());
 }
@@ -99,9 +96,8 @@ TEST(BinaryHeap, heap_remove_from_top) {
     int removedItem = heap.removeItemFromTop();
 
     ASSERT_EQ(10, removedItem);
-    int* expectedState = new int[7] { 9, 8, 5, 7, 6, 4 };
-    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), expectedState, sizeof(int) * 4));
-    delete [] expectedState;
+    int expectedState[] = { 9, 8, 5, 7, 6, 4 };
+    ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), &expectedState, sizeof(int) * 4));
     ASSERT_EQ(6, heap.getSize());
     ASSERT_EQ(7, heap.getCapacity());
 }
