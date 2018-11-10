@@ -25,16 +25,22 @@
             "lldbmipath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
         },
         {
-            "name": "priority queue test ms",
+            "name": "pq test ms",
             "type": "cppdbg",
             "request": "launch",
+            "osx": {
+                "MIMode": "lldb",
+                "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+            },
+            "linux": {
+                "MIMode": "gdb"
+            },
             "program": "${workspaceFolder}/build/priority_queue/test/priority_queue_test",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb"
+            "externalConsole": false
         },
     ]
 }
