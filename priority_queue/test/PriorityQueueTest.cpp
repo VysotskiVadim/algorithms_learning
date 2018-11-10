@@ -4,6 +4,7 @@
 #include "BinaryHeap.hpp"
 #include <cstring>
 #include <stdexcept>
+#include "BinaryHeapBasedPriorityQueue.hpp"
 
 using namespace al;
 
@@ -103,6 +104,23 @@ TEST(BinaryHeap, heap_remove_from_top) {
     delete [] expectedState;
     ASSERT_EQ(6, heap.getSize());
     ASSERT_EQ(7, heap.getCapacity());
+}
+
+TEST(PriorityQueue, queue) {
+    const int sequenceSize = 10;
+    int sequence[] = { 234, 58, 394, 5630, 37, 44, 36, 30, 27, 39 };
+    BinaryHeapBasedPriorityQueue<int> queue;
+
+    for (int i = 0; i < sequenceSize; i++) {
+        queue.addItem(sequence[i]);
+    }
+
+    int previousNumber = INT_MAX;
+    for (int i = 0; i < sequenceSize; i++) {
+        int removedItem = queue.removeNext();
+        ASSERT_LE(removedItem, previousNumber);
+        previousNumber = removedItem;
+    }
 }
 
 int main(int argc, char** argv) {
