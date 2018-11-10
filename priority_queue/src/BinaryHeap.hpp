@@ -26,6 +26,8 @@ namespace al {
         BinaryHeap()
             :BinaryHeap(std::unique_ptr< Comparer<T> >(new GenericComparer<T>), new T[10], 0, 10) { }
 
+        ~BinaryHeap();
+
         int getSize();
         int getCapacity();
         void insertItem(T item);
@@ -59,6 +61,11 @@ namespace al {
     _size(size),
     _comparer(std::move(comparer))
     { }
+
+    template <typename T>
+    BinaryHeap<T>::~BinaryHeap() {
+        delete [] _heap;
+    }
 
     template <typename T>
     int BinaryHeap<T>::getSize() {
