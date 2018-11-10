@@ -3,6 +3,7 @@
 #include <memory>
 #include "GenericComparer.hpp"
 #include <cstring>
+#include <sstream>
 
 namespace al {
 
@@ -81,6 +82,11 @@ namespace al {
 
     template <typename T>
     void BinaryHeap<T>::setItem(int index, T item) {
+        if (index < 1 || index > _capacity) {
+            std::stringstream errorMessage;
+            errorMessage << "BinaryHeap.setItem: given index is " << index;
+            throw std::out_of_range(errorMessage.str());
+        }
         _heap[index - 1] = item;
     }
 

@@ -69,6 +69,28 @@ TEST(BinaryHeap, get_item_by_index_out_of_range) {
         heap.getItem(5);
     }, std::out_of_range);
 }
+
+TEST(BinaryHeap, set_item_by_index) {
+    int* initialState = new int[5] { 10, 9, 8, 7, 6 };
+    auto heap = BinaryHeap<int>(initialState, 4, 5);
+    heap.setItem(1, -4);
+    heap.setItem(4, 99);
+    heap.setItem(5, 100);
+    ASSERT_EQ(-4, heap.getItem(1));
+    ASSERT_EQ(99, heap.getItem(4));
+}
+
+TEST(BinaryHeap, set_item_by_index_out_of_range) {
+    int* initialState = new int[5] { 10, 9, 8, 7, 0 };
+    auto heap = BinaryHeap<int>(initialState, 4, 5);
+    ASSERT_THROW({
+        heap.setItem(0, 0);
+    }, std::out_of_range);
+    ASSERT_THROW({
+        heap.setItem(6, 0);
+    }, std::out_of_range);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
