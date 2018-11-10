@@ -29,14 +29,14 @@ namespace al {
         int getCapacity();
         void insertItem(T item);
         T* getInnerHeap();
+        T getItem(int index);
+        void setItem(int index, T item);
     private:
         int _capacity;
         int _size;
         std::unique_ptr< Comparer<T> > _comparer;
         T *_heap;
 
-        T getItem(int index);
-        void setItem(int index, T item);
         void exchangeItems(int index1, int index2);
         void swim(int index);
         bool isTopNode(int index);
@@ -71,6 +71,11 @@ namespace al {
 
     template <typename T>
     T BinaryHeap<T>::getItem(int index) {
+        if (index < 1 || index > _size) {
+            std::stringstream errorMessage;
+            errorMessage << "BinaryHeap.getItem: given index is " << index;
+            throw std::out_of_range(errorMessage.str());
+        }
         return _heap[index - 1];
     }
 
