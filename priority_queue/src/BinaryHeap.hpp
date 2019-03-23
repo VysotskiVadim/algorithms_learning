@@ -52,6 +52,8 @@ namespace al {
         void increaseHeapSize();
         void sink(int index);
         bool getMaxChild(int index, int &childIndex);
+        bool needToDecreaseHeapSize();
+        void decreaseHeapSize();
     };
 
 
@@ -153,9 +155,24 @@ namespace al {
     template <typename T>
     void BinaryHeap<T>::increaseHeapSize() {
         int newCapacity = getCapacity() * Threashold;
-        int* newHeap = new T[newCapacity];
+        T* newHeap = new T[newCapacity];
         std::memcpy(newHeap, _heap, sizeof(T) * getCapacity());
         delete [] _heap;
+        _heap = newHeap;
+        _capacity = newCapacity;
+    }
+
+    template <typename T>
+    bool BinaryHeap<T>::needToDecreaseHeapSize() {
+        return getSize() * 4 <= getCapacity();
+    }
+
+    template <typename T>
+    void BinaryHeap<T>::decreaseHeapSize() {
+        int newCapacity = getCapacity() / 2;
+        T* newHeap = new T[newCapacity];
+        std::memcpy(newHeap, _heap, sizeof(T) * getSize());
+         delete [] _heap;
         _heap = newHeap;
         _capacity = newCapacity;
     }
@@ -200,6 +217,9 @@ namespace al {
         setItem(1, getItem(_size));
         _size--;
         sink(1);
+        if (needToDecreaseHeapSize()) {
+            decreaseHeapSize();
+        }
         return true;
     }
 }

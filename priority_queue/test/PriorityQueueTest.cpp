@@ -143,6 +143,17 @@ TEST(BinaryHeap, heap_remove_five_items) {
     ASSERT_EQ(0, heap.getSize());
 }
 
+TEST(BinaryHeap, decrease_heap_size) {
+    int* initialState = new int[16] { 5, 4, 3, 2, 1 };
+    BinaryHeap<int> heap(initialState, 5, 16);
+
+    int nextElement = -1;
+    bool result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(5, nextElement);
+    ASSERT_TRUE(result);
+    ASSERT_EQ(8, heap.getCapacity());
+}
+
 TEST(PriorityQueue, queue) {
     const int sequenceSize = 10;
     int sequence[] = { 234, 58, 394, 5630, 37, 44, 36, 30, 27, 39 };
