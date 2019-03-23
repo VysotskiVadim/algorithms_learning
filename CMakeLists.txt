@@ -16,4 +16,5 @@ add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src"
 
 enable_testing()
 add_subdirectory(ring_buffer)
+add_subdirectory(binary_heap)
 add_subdirectory(priority_queue)
