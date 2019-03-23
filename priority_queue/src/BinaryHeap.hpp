@@ -49,11 +49,11 @@ namespace al {
         int getParentIndex(int index);
         bool isMore(int index1, int index2);
         bool isLess(int index1, int index2);
-        void increaseHeapSize();
+        void increaseHeapCapacity();
         void sink(int index);
         bool getMaxChild(int index, int &childIndex);
-        bool needToDecreaseHeapSize();
-        void decreaseHeapSize();
+        bool needToDecreaseHeapCapacity();
+        void decreaseHeapCapacity();
     };
 
 
@@ -153,7 +153,7 @@ namespace al {
     }
 
     template <typename T>
-    void BinaryHeap<T>::increaseHeapSize() {
+    void BinaryHeap<T>::increaseHeapCapacity() {
         int newCapacity = getCapacity() * Threashold;
         T* newHeap = new T[newCapacity];
         std::memcpy(newHeap, _heap, sizeof(T) * getCapacity());
@@ -163,12 +163,12 @@ namespace al {
     }
 
     template <typename T>
-    bool BinaryHeap<T>::needToDecreaseHeapSize() {
+    bool BinaryHeap<T>::needToDecreaseHeapCapacity() {
         return getSize() * 4 <= getCapacity();
     }
 
     template <typename T>
-    void BinaryHeap<T>::decreaseHeapSize() {
+    void BinaryHeap<T>::decreaseHeapCapacity() {
         int newCapacity = getCapacity() / 2;
         T* newHeap = new T[newCapacity];
         std::memcpy(newHeap, _heap, sizeof(T) * getSize());
@@ -200,7 +200,7 @@ namespace al {
     void BinaryHeap<T>::insertItem(T item) {
         int nextElementPosition = getSize() + 1;
         if (nextElementPosition > getCapacity()) {
-            increaseHeapSize();
+            increaseHeapCapacity();
         }
         setItem(nextElementPosition, item);
         _size++;
@@ -217,8 +217,8 @@ namespace al {
         setItem(1, getItem(_size));
         _size--;
         sink(1);
-        if (needToDecreaseHeapSize()) {
-            decreaseHeapSize();
+        if (needToDecreaseHeapCapacity()) {
+            decreaseHeapCapacity();
         }
         return true;
     }
