@@ -50,7 +50,7 @@ namespace al {
         bool isLess(int index1, int index2);
         void increaseHeapSize();
         void sink(int index);
-        bool hasChild(int index);
+        bool getMaxChild(int index, int &childIndex);
     };
 
 
@@ -115,8 +115,22 @@ namespace al {
     }
 
     template <typename T>
-    bool BinaryHeap<T>::hasChild(int index) {
-        return index * 2 <= _size;
+    bool BinaryHeap<T>::getMaxChild(int index, int &childIndex) {
+        int firstChildIndex = index * 2;
+        if (firstChildIndex > getSize()) {
+            return false;
+        }
+        int secondChildIndex = firstChildIndex + 1;
+        if (secondChildIndex > getSize()) {
+            childIndex = firstChildIndex;
+        }
+        else if (isMore(firstChildIndex, secondChildIndex)) {
+            childIndex = firstChildIndex;
+        }
+        else {
+            childIndex = secondChildIndex;
+        }
+        return true;
     }
 
     template <typename T>
@@ -155,23 +169,14 @@ namespace al {
     }
 
     template <typename T>
-    void BinaryHeap<T>::sink(int index) {
-        while (hasChild(index)) {
-            int childIndex = index * 2; 
-            int secondChildIndex = childIndex + 1;
-            bool hasSecondChild = secondChildIndex <= _size;
-            if (hasSecondChild && isLess(childIndex, secondChildIndex)) {
-                childIndex = secondChildIndex;
-            }
-            if (isLess(index, childIndex)) {
-                exchangeItems(index, childIndex);
-                index = childIndex;
-            }
-            else {
-                break;
-            }
+     void BinaryHeap<T>::sink(int index) {
+        int maxChildIndex = -1;
+        while(getMaxChild(index, maxChildIndex) && !isMore(index, maxChildIndex)){
+            exchangeItems(index, maxChildIndex);
+            index = maxChildIndex;
         }
     }
+
 
     template <typename T>
     void BinaryHeap<T>::insertItem(T item) {
