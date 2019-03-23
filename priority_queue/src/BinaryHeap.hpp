@@ -31,7 +31,7 @@ namespace al {
         int getSize();
         int getCapacity();
         void insertItem(T item);
-        T removeItemFromTop();
+        bool removeItemFromTop(T &item);
 
         T* getInnerHeap();
         T getItem(int index);
@@ -192,11 +192,14 @@ namespace al {
 
 
     template <typename T>
-    T BinaryHeap<T>::removeItemFromTop() {
-        T topItem = getItem(1);
+    bool BinaryHeap<T>::removeItemFromTop(T &item) {
+        if (getSize() < 1) {
+            return false;
+        }
+        item = getItem(1);
         setItem(1, getItem(_size));
         _size--;
         sink(1);
-        return topItem;
+        return true;
     }
 }

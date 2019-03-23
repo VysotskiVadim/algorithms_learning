@@ -93,13 +93,54 @@ TEST(BinaryHeap, heap_remove_from_top) {
     int* initialState = new int[7] { 10, 8, 9, 7, 6, 5, 4 };
     BinaryHeap<int> heap(initialState, 7, 7);
 
-    int removedItem = heap.removeItemFromTop();
+    int removedItem = -1;
+    bool result = heap.removeItemFromTop(removedItem);
 
+    ASSERT_TRUE(result);
     ASSERT_EQ(10, removedItem);
     int expectedState[] = { 9, 8, 5, 7, 6, 4 };
     ASSERT_EQ(0, std::memcmp(heap.getInnerHeap(), &expectedState, sizeof(int) * 4));
     ASSERT_EQ(6, heap.getSize());
     ASSERT_EQ(7, heap.getCapacity());
+}
+
+TEST(BinaryHeap, heap_remove_five_items) {
+    int* initialState = new int[5] { 6, 5, 4, 3, 2 };
+    BinaryHeap<int> heap(initialState, 5, 5);
+
+    int nextElement = -1;
+    bool result = false;
+
+    result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(6, nextElement);
+    ASSERT_EQ(true, result);
+    ASSERT_EQ(4, heap.getSize());
+
+    result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(5, nextElement);
+    ASSERT_EQ(true, result);
+    ASSERT_EQ(3, heap.getSize());
+
+    result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(4, nextElement);
+    ASSERT_EQ(true, result);
+    ASSERT_EQ(2, heap.getSize());
+
+    result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(3, nextElement);
+    ASSERT_EQ(true, result);
+    ASSERT_EQ(1, heap.getSize());
+
+    result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(2, nextElement);
+    ASSERT_EQ(true, result);
+    ASSERT_EQ(0, heap.getSize());
+
+    nextElement = -555;
+    result = heap.removeItemFromTop(nextElement);
+    ASSERT_EQ(-555, nextElement);
+    ASSERT_EQ(false, result);
+    ASSERT_EQ(0, heap.getSize());
 }
 
 TEST(PriorityQueue, queue) {
@@ -111,12 +152,16 @@ TEST(PriorityQueue, queue) {
         queue.addItem(sequence[i]);
     }
 
-    int previousIteam = queue.removeNext();;
+    int previousIteam = -1;
+    int removedItem = -2;
+    queue.removeNext(previousIteam);
     for (int i = 1; i < sequenceSize; i++) {
-        int removedItem = queue.removeNext();
+        bool removedSuccessfully = queue.removeNext(removedItem);
+        ASSERT_TRUE(removedSuccessfully);
         ASSERT_LE(removedItem, previousIteam);
         previousIteam = removedItem;
     }
+    ASSERT_FALSE(queue.removeNext(removedItem));
 }
 
 int main(int argc, char** argv) {

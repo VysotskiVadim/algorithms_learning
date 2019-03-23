@@ -11,7 +11,7 @@ namespace al {
         BinaryHeapBasedPriorityQueue(std::unique_ptr< Comparer<T> > comparer);
         BinaryHeapBasedPriorityQueue();
         void addItem(T item) override;
-        T removeNext() override;
+        bool removeNext(T &item) override;
         int getCount() override;
         ~BinaryHeapBasedPriorityQueue() override { }
     private:
@@ -32,8 +32,8 @@ namespace al {
     }
 
     template <typename T>
-    T BinaryHeapBasedPriorityQueue<T>::removeNext() {
-        return _heap.removeItemFromTop();
+    bool BinaryHeapBasedPriorityQueue<T>::removeNext(T &item) {
+        return _heap.removeItemFromTop(item);
     }
 
     template <typename T>
