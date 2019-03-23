@@ -37,6 +37,7 @@ namespace al {
         T getItem(int index);
         void setItem(int index, T item);
     private:
+        int const Threashold = 2;
         int _capacity;
         int _size;
         std::unique_ptr< Comparer<T> > _comparer;
@@ -151,7 +152,7 @@ namespace al {
 
     template <typename T>
     void BinaryHeap<T>::increaseHeapSize() {
-        int newCapacity = getCapacity() * 2;
+        int newCapacity = getCapacity() * Threashold;
         int* newHeap = new T[newCapacity];
         std::memcpy(newHeap, _heap, sizeof(T) * getCapacity());
         delete [] _heap;
